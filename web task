@@ -1,0 +1,28 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract GradeBook {
+    // Structure to hold student grades
+    struct Grade {
+        uint256 studentId;
+        string courseCode;
+        uint256 grade;
+    }
+
+    // Mapping to store grades
+    mapping(uint256 => Grade[]) public grades;
+
+    // Event to log grade added
+    event GradeAdded(uint256 indexed studentId, string courseCode, uint256 grade);
+
+    // Function to add grade by teacher
+    function addGrade(uint256 _studentId, string memory _courseCode, uint256 _grade) public {
+        grades[_studentId].push(Grade(_studentId, _courseCode, _grade));
+        emit GradeAdded(_studentId, _courseCode, _grade);
+    }
+
+    // Function to get grades for a student
+    function getGrades(uint256 _studentId) public view returns (Grade[] memory) {
+        return grades[_studentId];
+    }
+}
